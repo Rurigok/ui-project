@@ -1,3 +1,6 @@
+##############################
+# Android files
+##############################
 # Built application files
 *.apk
 *.ap_
@@ -38,3 +41,9 @@ captures/
 
 # Keystore files
 *.jks
+
+##############################
+# Python files
+##############################
+__pycache__
+*.pyc

@@ -1,7 +1,7 @@
 from flask import Flask
 from flask import request
 
-import intella
+import query
 
 app = Flask(__name__)
 
@@ -11,11 +11,11 @@ def home():
 
 @app.route("/q", methods=["POST"])
 def text_query_post():
-    return intella.parse_input(request.form("q"))
+    return query.parse_input(request.form("q"))
 
 @app.route("/vq", methods=["POST"])
 def voice_query_post():
-    return intella.parse_voice(request.form)
+    return query.parse_voice(request.form)
 
 if __name__ == '__main__':
     app.run()

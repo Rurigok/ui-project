@@ -19,6 +19,13 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:background="@drawable/ic_mic_black_36px"
-        />
+        android:background="@drawable/ic_mic_black_36px" />
+
+    <EditText
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_marginTop="50dp"
+        android:hint="Query goes here..."/>
 </RelativeLayout>

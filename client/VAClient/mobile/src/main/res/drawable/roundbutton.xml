@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="oval">
+    <!--
+        the following sets the gradient for the button
+        #C0C0C0 = silver
+        #A9A9A9 = dark grey
+        Experiment with colors later?
+        -->
+    <gradient
+        android:startColor="#C0C0C0"
+        android:endColor="#A9A9A9"
+        android:angle="270"
+
+        />
+</shape>

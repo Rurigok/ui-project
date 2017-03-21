@@ -20,7 +20,9 @@
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:src="@drawable/ic_keyboard_voice_black_36dp"
-        android:background="@drawable/roundbutton"/>
+        android:background="@drawable/roundbutton"
+        android:id="@+id/processButton"
+        android:onClick="handleButton" />
 
     <EditText
         android:layout_width="300dp"

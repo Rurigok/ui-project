@@ -27,5 +27,6 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="350dp"
-        android:hint="Query goes here..."/>
+        android:hint="Query goes here..."
+        android:id="@+id/queryLine" />
 </RelativeLayout>

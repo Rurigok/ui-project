@@ -22,7 +22,7 @@
         android:layout_centerVertical="true"
         android:src="@drawable/ic_keyboard_voice_black_36dp"
         android:background="@drawable/roundbutton"
-        />
+        android:onClick="handleButton" />
 
     <EditText
         android:id="@+id/query"

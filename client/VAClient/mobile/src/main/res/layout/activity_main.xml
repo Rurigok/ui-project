@@ -15,17 +15,35 @@
         android:text="Voice assistant!" />
 
     <ImageButton
+        android:id="@+id/micButton"
         android:layout_width="75dp"
         android:layout_height="75dp"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:src="@drawable/ic_keyboard_voice_black_36dp"
-        android:background="@drawable/roundbutton"/>
+        android:background="@drawable/roundbutton"
+        />
 
     <EditText
+        android:id="@+id/query"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
         android:layout_marginTop="350dp"
         android:hint="Query goes here..."/>
+
+    <Button
+        android:id="@+id/play"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/query"
+        android:text="Play recording"/>
+
+    <Button
+        android:id="@+id/send"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/query"
+        android:layout_toRightOf="@+id/play"
+        android:text="Send query"
+        />
 </RelativeLayout>

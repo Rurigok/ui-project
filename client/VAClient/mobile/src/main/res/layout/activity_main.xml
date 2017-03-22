@@ -20,9 +20,8 @@
         android:layout_height="75dp"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:src="@drawable/ic_keyboard_voice_black_36dp"
         android:background="@drawable/roundbutton"
-        android:onClick="handleButton" />
+        android:src="@drawable/ic_keyboard_voice_black_36dp" />
 
     <EditText
         android:id="@+id/query"

@@ -10,6 +10,15 @@
     tools:context="finalproject.ui.vaclient.MainActivity">
 
     <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/micButton"
+        android:layout_centerHorizontal="true"
+        android:text="@string/Instruction" />
+
+    <TextView
+        android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Voice assistant!" />
@@ -45,4 +54,5 @@
         android:layout_toRightOf="@+id/play"
         android:text="Send query"
         />
+
 </RelativeLayout>

@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">VAClient</string>
+    <string name="Instruction">Press and Hold Mic to record your query</string>
 </resources>

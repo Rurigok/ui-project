@@ -29,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String AUDIO_RECORDER_FOLDER = "AudioRecorder";
     private static final int REQUEST_RECORD_AUDIO_PERMISSION = 200;
     public static final boolean debug = true;
+    private String TAG = "Recording";
     private MediaRecorder recorder = null;
     private MediaPlayer player = null;
     private int currentFormat = 0;
@@ -48,7 +49,10 @@ public class MainActivity extends AppCompatActivity {
                 permissionToRecordAccepted  = grantResults[0] == PackageManager.PERMISSION_GRANTED;
                 break;
         }
-        if (!permissionToRecordAccepted ) finish();
+        if (!permissionToRecordAccepted ) {
+            System.out.print("no permission mic");
+            finish();
+        }
 
     }
 
@@ -77,11 +81,11 @@ public class MainActivity extends AppCompatActivity {
             public boolean onTouch(View v, MotionEvent event){
                     switch(event.getAction()) {
                     case MotionEvent.ACTION_DOWN:
-                        Log.i("Recording", "Begin recording");
+                        Log.i(TAG, "Begin recording");
                         startRecord();
                         break;
                     case MotionEvent.ACTION_UP:
-                        Log.i("Recording", "End recording");
+                        Log.i(TAG, "End recording");
                         stopRecord();
                         break;
                 }

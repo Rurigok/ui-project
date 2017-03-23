@@ -56,20 +56,16 @@
         android:textSize="20sp"
         android:visibility="invisible" />
 
-    <ScrollView
+    <ListView
         android:id="@+id/chatView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/query"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/textView2"
         android:layout_marginBottom="18dp">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" />
-    </ScrollView>
+
+    </ListView>
 
 </RelativeLayout>

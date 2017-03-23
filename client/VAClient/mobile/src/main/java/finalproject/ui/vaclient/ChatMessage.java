@@ -1,7 +1,7 @@
 package finalproject.ui.vaclient;
 
 /**
- * Created by Technovibe on 17-04-2015.
+ * Created by Cliff
  */
 public class ChatMessage {
     private long id;
@@ -10,6 +10,13 @@ public class ChatMessage {
     private Long userId;
     private String dateTime;
 
+    public ChatMessage(){
+    }
+
+    public ChatMessage(boolean isMe, String message){
+        this.isMe = isMe;
+        this.message = message;
+    }
     public long getId() {
         return id;
     }

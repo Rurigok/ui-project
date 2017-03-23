@@ -8,11 +8,13 @@ import android.content.pm.PackageManager;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.os.Environment;
+import android.os.SystemClock;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -20,14 +22,18 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.ScrollView;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
     ImageButton microphone;
     Button send;
     EditText txt;
+    ListView messagesContainer;
     boolean notPlaying = false;
     private static final String AUDIO_RECORDER_FILE_EXT_3GP = ".3gp";
     private static final String AUDIO_RECORDER_FILE_EXT_MP4 = ".mp4";
@@ -35,6 +41,8 @@ public class MainActivity extends AppCompatActivity {
     private static final int REQUEST_RECORD_AUDIO_PERMISSION = 200;
     public static final boolean debug = true;
     private String TAG = "Recording";
+    private ChatAdapter adapter;
+    private ArrayList<ChatMessage> chatHistory;
     private MediaRecorder recorder = null;
     private MediaPlayer player = null;
     private int currentFormat = 0;
@@ -121,6 +129,40 @@ public class MainActivity extends AppCompatActivity {
                 notPlaying = !notPlaying;
             }
         });*/
+
+        messagesContainer = (ListView)findViewById(R.id.chatView);
+        final ChatAdapter adapter = new ChatAdapter(MainActivity.this, new ArrayList<ChatMessage>());
+        messagesContainer.setAdapter(adapter);
+        ChatMessage starter = new ChatMessage(true, "Welcome to Voice Assistant!");
+        adapter.add(starter);
+        adapter.notifyDataSetChanged();
+        scroll();
+        ChatMessage starter2 = new ChatMessage(true, "Type a query to get started:");
+        adapter.add(starter2);
+        adapter.notifyDataSetChanged();
+        scroll();
+
+        send =(Button)findViewById(R.id.send);
+        send.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String msg = txt.getText().toString();
+                if(TextUtils.isEmpty(msg)){
+                    return;
+                }
+                ChatMessage usrInput = new ChatMessage();
+                usrInput.setMe(false);
+                usrInput.setMessage(msg);
+                txt.setText("");
+                adapter.add(usrInput);
+                adapter.notifyDataSetChanged();
+                scroll();
+                ChatMessage automaticResponse = new ChatMessage(true, "The sending of queries is not yet supported!");
+                adapter.add(automaticResponse);
+                adapter.notifyDataSetChanged();
+                scroll();
+            }
+        });
     }
 
     public void checkOffTouch(View view) {
@@ -145,6 +187,11 @@ public class MainActivity extends AppCompatActivity {
         inputMethodManager.hideSoftInputFromWindow(
                 activity.getCurrentFocus().getWindowToken(), 0);
     }
+
+    private void scroll() {
+        messagesContainer.setSelection(messagesContainer.getCount() - 1);
+    }
+
 
     private String getFilename(){
         String filepath = Environment.getExternalStorageDirectory().getPath();

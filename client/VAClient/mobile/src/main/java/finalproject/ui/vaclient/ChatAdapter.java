@@ -14,7 +14,7 @@ import android.widget.TextView;
 import java.util.List;
 
 /**
- * Created by Technovibe on 17-04-2015.
+ * Created by Cliff
  */
 public class ChatAdapter extends BaseAdapter {
 
@@ -66,7 +66,6 @@ public class ChatAdapter extends BaseAdapter {
         boolean myMsg = chatMessage.getIsme() ;//Just a dummy check to simulate whether it me or other sender
         setAlignment(holder, myMsg);
         holder.txtMessage.setText(chatMessage.getMessage());
-        holder.txtInfo.setText(chatMessage.getDate());
 
 
         return convertView;

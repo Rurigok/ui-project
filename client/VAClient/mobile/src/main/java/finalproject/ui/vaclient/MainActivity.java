@@ -2,6 +2,7 @@ package finalproject.ui.vaclient;
 
 import android.*;
 import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.media.MediaPlayer;
@@ -109,7 +110,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        //checkOffTouch();
+        checkOffTouch((View)findViewById(R.id.parent_view));
 
         /*//onClick listener for play button
         play=(Button)findViewById(R.id.play);
@@ -127,11 +128,22 @@ public class MainActivity extends AppCompatActivity {
         if (!(view instanceof EditText)) {
             view.setOnTouchListener(new View.OnTouchListener() {
                 public boolean onTouch(View v, MotionEvent event) {
-                    //
-                    return false;
+                    hideKeyboard(MainActivity.this);
+                    send.setVisibility(View.INVISIBLE);
+                    microphone.setVisibility(View.VISIBLE);
+                    return true;
                 }
             });
         }
+    }
+
+    public static void hideKeyboard(Activity activity)
+    {
+        InputMethodManager inputMethodManager =
+                (InputMethodManager) activity.getSystemService(
+                        Activity.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(
+                activity.getCurrentFocus().getWindowToken(), 0);
     }
 
     private String getFilename(){

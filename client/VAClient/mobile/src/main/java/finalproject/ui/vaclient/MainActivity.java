@@ -2,6 +2,7 @@ package finalproject.ui.vaclient;
 
 import android.*;
 import android.Manifest;
+import android.content.Context;
 import android.content.pm.PackageManager;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
@@ -14,6 +15,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.EditText;
@@ -101,6 +103,8 @@ public class MainActivity extends AppCompatActivity {
                 send = (Button)findViewById(R.id.send);
                 send.setVisibility(View.VISIBLE);
                 microphone.setVisibility(View.INVISIBLE);
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.showSoftInput(txt,InputMethodManager.SHOW_IMPLICIT);
                 return true;
             }
         });

@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">VAClient</string>
     <string name="Instruction">Press and Hold Mic to record your query</string>
+    
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_chat">ChatActivity</string>
 </resources>

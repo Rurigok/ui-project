@@ -7,15 +7,18 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:visibility="visible"
     tools:context="finalproject.ui.vaclient.MainActivity">
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/micButton"
-        android:layout_centerHorizontal="true"
-        android:text="@string/Instruction" />
+        android:text="@string/Instruction"
+        android:textSize="16sp"
+        android:layout_above="@+id/query"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
     <TextView
         android:id="@+id/textView2"
@@ -25,34 +28,35 @@
 
     <ImageButton
         android:id="@+id/micButton"
-        android:layout_width="75dp"
-        android:layout_height="75dp"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
         android:background="@drawable/roundbutton"
         android:src="@drawable/ic_keyboard_voice_black_36dp" />
 
     <EditText
         android:id="@+id/query"
-        android:layout_width="300dp"
+        android:layout_width="250dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="350dp"
-        android:hint="Query goes here..."/>
-
-    <Button
-        android:id="@+id/play"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/query"
-        android:text="Play recording"/>
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:hint="Query goes here..." />
 
     <Button
         android:id="@+id/send"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/query"
-        android:layout_toRightOf="@+id/play"
-        android:text="Send query"
-        />
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignLeft="@+id/micButton"
+        android:layout_alignParentBottom="false"
+        android:layout_alignParentEnd="false"
+        android:layout_alignParentRight="false"
+        android:layout_alignStart="@+id/micButton"
+        android:layout_alignTop="@+id/micButton"
+        android:text="->"
+        android:textSize="20sp"
+        android:visibility="invisible" />
 
 </RelativeLayout>

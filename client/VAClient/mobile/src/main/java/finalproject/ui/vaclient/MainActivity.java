@@ -16,13 +16,15 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.EditText;
 
 import java.io.File;
 import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity {
     ImageButton microphone;
-    Button play;
+    Button send;
+    EditText txt;
     boolean notPlaying = false;
     private static final String AUDIO_RECORDER_FILE_EXT_3GP = ".3gp";
     private static final String AUDIO_RECORDER_FILE_EXT_MP4 = ".mp4";
@@ -73,7 +75,6 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-
         //Set onTouch listener for mic button
         microphone=(ImageButton)findViewById(R.id.micButton);
         microphone.setOnTouchListener(new View.OnTouchListener() {
@@ -92,7 +93,21 @@ public class MainActivity extends AppCompatActivity {
                 return false;
             }
         });
-        //onClick listener for play button
+
+        txt = (EditText)findViewById(R.id.query);
+        txt.setOnTouchListener(new View.OnTouchListener() {
+            public boolean onTouch(View v, MotionEvent event)
+            {
+                send = (Button)findViewById(R.id.send);
+                send.setVisibility(View.VISIBLE);
+                microphone.setVisibility(View.INVISIBLE);
+                return true;
+            }
+        });
+
+        //checkOffTouch();
+
+        /*//onClick listener for play button
         play=(Button)findViewById(R.id.play);
         play.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -100,7 +115,19 @@ public class MainActivity extends AppCompatActivity {
                 onPlay(notPlaying);
                 notPlaying = !notPlaying;
             }
-        });
+        });*/
+    }
+
+    public void checkOffTouch(View view) {
+
+        if (!(view instanceof EditText)) {
+            view.setOnTouchListener(new View.OnTouchListener() {
+                public boolean onTouch(View v, MotionEvent event) {
+                    //
+                    return false;
+                }
+            });
+        }
     }
 
     private String getFilename(){
@@ -155,7 +182,7 @@ public class MainActivity extends AppCompatActivity {
             recorder = null;
         }
     }
-
+    /*
     private void onPlay(boolean start) {
         if (start) {
             startPlaying();
@@ -179,7 +206,7 @@ public class MainActivity extends AppCompatActivity {
         player.release();
         player = null;
     }
-
+    */
     @Override
     public void onStop(){
         super.onStop();

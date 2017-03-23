@@ -24,6 +24,9 @@ import android.widget.ImageButton;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.ScrollView;
+import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 import java.io.File;
 import java.io.IOException;
@@ -85,9 +88,14 @@ public class MainActivity extends AppCompatActivity {
                         REQUEST_RECORD_AUDIO_PERMISSION);
             }
         }
+        //Hide mic button and instruction view for demo purposes
+        microphone = (ImageButton)findViewById(R.id.micButton);
+        microphone.setVisibility(View.INVISIBLE);
+        TextView instruct = (TextView)findViewById(R.id.textView);
+        instruct.setVisibility(View.INVISIBLE);
 
         //Set onTouch listener for mic button
-        microphone=(ImageButton)findViewById(R.id.micButton);
+        /*microphone=(ImageButton)findViewById(R.id.micButton);
         microphone.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event){
@@ -103,7 +111,7 @@ public class MainActivity extends AppCompatActivity {
                 }
                 return false;
             }
-        });
+        });*/
 
         txt = (EditText)findViewById(R.id.query);
         txt.setOnTouchListener(new View.OnTouchListener() {
@@ -111,7 +119,7 @@ public class MainActivity extends AppCompatActivity {
             {
                 send = (Button)findViewById(R.id.send);
                 send.setVisibility(View.VISIBLE);
-                microphone.setVisibility(View.INVISIBLE);
+               // microphone.setVisibility(View.INVISIBLE);
                 InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.showSoftInput(txt,InputMethodManager.SHOW_IMPLICIT);
                 return true;
@@ -172,7 +180,7 @@ public class MainActivity extends AppCompatActivity {
                 public boolean onTouch(View v, MotionEvent event) {
                     hideKeyboard(MainActivity.this);
                     send.setVisibility(View.INVISIBLE);
-                    microphone.setVisibility(View.VISIBLE);
+                   // microphone.setVisibility(View.VISIBLE);
                     return true;
                 }
             });

@@ -114,19 +114,26 @@ public class MainActivity extends AppCompatActivity {
         });*/
 
         txt = (EditText)findViewById(R.id.query);
+        View.OnFocusChangeListener fcListener = new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                if(view.getId() == R.id.query && !b) {
+                    InputMethodManager imm =  (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+                }
+            }
+        };
+        txt.setOnFocusChangeListener(fcListener);
         txt.setOnTouchListener(new View.OnTouchListener() {
             public boolean onTouch(View v, MotionEvent event)
             {
                 send = (Button)findViewById(R.id.send);
                 send.setVisibility(View.VISIBLE);
-               // microphone.setVisibility(View.INVISIBLE);
-                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.showSoftInput(txt,InputMethodManager.SHOW_IMPLICIT);
+                microphone.setVisibility(View.INVISIBLE);
+                showSoftKeyboard(v);
                 return true;
             }
         });
-
-        checkOffTouch((View)findViewById(R.id.parent_view));
 
         /*//onClick listener for play button
         play=(Button)findViewById(R.id.play);
@@ -173,18 +180,10 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    public void checkOffTouch(View view) {
-
-        if (!(view instanceof EditText)) {
-            view.setOnTouchListener(new View.OnTouchListener() {
-                public boolean onTouch(View v, MotionEvent event) {
-                    hideKeyboard(MainActivity.this);
-                    send.setVisibility(View.INVISIBLE);
-                   // microphone.setVisibility(View.VISIBLE);
-                    return true;
-                }
-            });
-        }
+    public void showSoftKeyboard(View view) {
+        InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+        view.requestFocus();
+        inputMethodManager.showSoftInput(view, 0);
     }
 
     public static void hideKeyboard(Activity activity)

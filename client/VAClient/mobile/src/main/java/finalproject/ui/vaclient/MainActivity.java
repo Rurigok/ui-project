@@ -15,9 +15,12 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -34,10 +37,11 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
     ImageButton microphone;
-    Button send;
+    ImageButton send;
     EditText txt;
     ListView messagesContainer;
     boolean notPlaying = false;
+    private static boolean keyBoard = false;
     private static final String AUDIO_RECORDER_FILE_EXT_3GP = ".3gp";
     private static final String AUDIO_RECORDER_FILE_EXT_MP4 = ".mp4";
     private static final String AUDIO_RECORDER_FOLDER = "AudioRecorder";
@@ -90,16 +94,16 @@ public class MainActivity extends AppCompatActivity {
         }
         //Hide mic button and instruction view for demo purposes
         microphone = (ImageButton)findViewById(R.id.micButton);
-        microphone.setVisibility(View.INVISIBLE);
+        microphone.setVisibility(View.VISIBLE);
         TextView instruct = (TextView)findViewById(R.id.textView);
         instruct.setVisibility(View.INVISIBLE);
 
         //Set onTouch listener for mic button
-        /*microphone=(ImageButton)findViewById(R.id.micButton);
+        microphone=(ImageButton)findViewById(R.id.micButton);
         microphone.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event){
-                    switch(event.getAction()) {
+                    /*switch(event.getAction()) {
                     case MotionEvent.ACTION_DOWN:
                         Log.i(TAG, "Begin recording");
                         startRecord();
@@ -108,26 +112,16 @@ public class MainActivity extends AppCompatActivity {
                         Log.i(TAG, "End recording");
                         stopRecord();
                         break;
-                }
-                return false;
+                }*/
+                return true;
             }
-        });*/
+        });
 
         txt = (EditText)findViewById(R.id.query);
-        View.OnFocusChangeListener fcListener = new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View view, boolean b) {
-                if(view.getId() == R.id.query && !b) {
-                    InputMethodManager imm =  (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                    imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-                }
-            }
-        };
-        txt.setOnFocusChangeListener(fcListener);
         txt.setOnTouchListener(new View.OnTouchListener() {
             public boolean onTouch(View v, MotionEvent event)
             {
-                send = (Button)findViewById(R.id.send);
+                send = (ImageButton)findViewById(R.id.send);
                 send.setVisibility(View.VISIBLE);
                 microphone.setVisibility(View.INVISIBLE);
                 showSoftKeyboard(v);
@@ -149,7 +143,7 @@ public class MainActivity extends AppCompatActivity {
         adapter.notifyDataSetChanged();
         scroll();
 
-        send =(Button)findViewById(R.id.send);
+        send =(ImageButton)findViewById(R.id.send);
         send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -176,15 +170,6 @@ public class MainActivity extends AppCompatActivity {
         InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
         view.requestFocus();
         inputMethodManager.showSoftInput(view, 0);
-    }
-
-    public static void hideKeyboard(Activity activity)
-    {
-        InputMethodManager inputMethodManager =
-                (InputMethodManager) activity.getSystemService(
-                        Activity.INPUT_METHOD_SERVICE);
-        inputMethodManager.hideSoftInputFromWindow(
-                activity.getCurrentFocus().getWindowToken(), 0);
     }
 
     private void scroll() {

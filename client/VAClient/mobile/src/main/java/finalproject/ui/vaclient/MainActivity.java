@@ -135,19 +135,11 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        /*//onClick listener for play button
-        play=(Button)findViewById(R.id.play);
-        play.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v){
-                onPlay(notPlaying);
-                notPlaying = !notPlaying;
-            }
-        });*/
-
         messagesContainer = (ListView)findViewById(R.id.chatView);
         final ChatAdapter adapter = new ChatAdapter(MainActivity.this, new ArrayList<ChatMessage>());
         messagesContainer.setAdapter(adapter);
+        messagesContainer.setDivider(null);
+        messagesContainer.setDividerHeight(0);
         ChatMessage starter = new ChatMessage(true, "Welcome to Voice Assistant!");
         adapter.add(starter);
         adapter.notifyDataSetChanged();

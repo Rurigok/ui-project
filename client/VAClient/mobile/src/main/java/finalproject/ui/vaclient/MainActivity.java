@@ -26,14 +26,18 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
+import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.OutputStream;
+import java.net.MalformedURLException;
+import java.net.SocketTimeoutException;
+import java.net.URL;
 import java.util.ArrayList;
+
+import javax.net.ssl.HttpsURLConnection;
 
 public class MainActivity extends AppCompatActivity {
     ImageButton microphone;
@@ -41,7 +45,6 @@ public class MainActivity extends AppCompatActivity {
     EditText txt;
     ListView messagesContainer;
     boolean notPlaying = false;
-    private static boolean keyBoard = false;
     private static final String AUDIO_RECORDER_FILE_EXT_3GP = ".3gp";
     private static final String AUDIO_RECORDER_FILE_EXT_MP4 = ".mp4";
     private static final String AUDIO_RECORDER_FOLDER = "AudioRecorder";
@@ -158,6 +161,33 @@ public class MainActivity extends AppCompatActivity {
                 adapter.add(usrInput);
                 adapter.notifyDataSetChanged();
                 scroll();
+
+                URL url = null;
+                HttpsURLConnection client = null;
+                /*try{
+                    url = new URL("http://localhost:5000/q");
+                    client = (HttpsURLConnection) url.openConnection();
+                    client.setRequestMethod("POST");
+                    client.setRequestProperty("Key", "Value");
+                    client.setDoOutput(true);
+                    OutputStream outputPost = new BufferedOutputStream(client.getOutputStream());
+
+                    //DO A LOT MORE STUFF EVERYWHERE
+
+
+                    outputPost.write(usrInput.getMessage().getBytes());
+                    outputPost.flush();
+                    outputPost.close();
+                } catch (MalformedURLException e){
+                    e.printStackTrace();
+                } catch (SocketTimeoutException e){
+                    e.printStackTrace();
+                } catch (IOException e){
+                    e.printStackTrace();
+                }*/
+
+
+
                 ChatMessage automaticResponse = new ChatMessage(true, "The sending of queries is not yet supported!");
                 adapter.add(automaticResponse);
                 adapter.notifyDataSetChanged();

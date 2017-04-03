@@ -32,6 +32,7 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.SocketTimeoutException;
 import java.net.URL;
@@ -161,31 +162,6 @@ public class MainActivity extends AppCompatActivity {
                 adapter.add(usrInput);
                 adapter.notifyDataSetChanged();
                 scroll();
-
-                URL url = null;
-                HttpsURLConnection client = null;
-                /*try{
-                    url = new URL("http://localhost:5000/q");
-                    client = (HttpsURLConnection) url.openConnection();
-                    client.setRequestMethod("POST");
-                    client.setRequestProperty("Key", "Value");
-                    client.setDoOutput(true);
-                    OutputStream outputPost = new BufferedOutputStream(client.getOutputStream());
-
-                    //DO A LOT MORE STUFF EVERYWHERE
-
-
-                    outputPost.write(usrInput.getMessage().getBytes());
-                    outputPost.flush();
-                    outputPost.close();
-                } catch (MalformedURLException e){
-                    e.printStackTrace();
-                } catch (SocketTimeoutException e){
-                    e.printStackTrace();
-                } catch (IOException e){
-                    e.printStackTrace();
-                }*/
-
 
 
                 ChatMessage automaticResponse = new ChatMessage(true, "The sending of queries is not yet supported!");

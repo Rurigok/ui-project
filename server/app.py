@@ -15,9 +15,9 @@ def text_query(q):
 
 @app.route("/q", methods=["POST"])
 def text_query_post():
-    query_text = request.form("q")
-    location = request.form("l")
-    timestamp = request.form("t")
+    query_text = request.form["q"]
+    location = request.form["l"]
+    timestamp = request.form["t"]
     return query.parse_query(query_text, location, timestamp)
 
 @app.route("/vq", methods=["POST"])

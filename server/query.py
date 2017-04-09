@@ -1,4 +1,3 @@
-import nltk
 import json
 
 def parse_query(raw_text, location, timestamp):

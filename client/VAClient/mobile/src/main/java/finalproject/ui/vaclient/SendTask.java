@@ -2,6 +2,8 @@ package finalproject.ui.vaclient;
 
 import android.os.AsyncTask;
 
+import org.json.JSONObject;
+
 import java.io.BufferedOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -14,12 +16,13 @@ import java.net.URL;
  * Created by pizzapoindexter on 4/3/17.
  */
 
-public class SendTask extends AsyncTask<String, Void, RSSFeed> {
+public class SendTask extends AsyncTask<String, Void, String> {
     private Exception exception;
 
-    protected void doInBackground(ChatMessage usrInput){
+    protected String doInBackground(String... params){
         URL url = null;
         HttpURLConnection conn = null;
+        String result = null;
         try{
             url = new URL("http://localhost:5000/q");
             conn = (HttpURLConnection) url.openConnection();
@@ -31,7 +34,7 @@ public class SendTask extends AsyncTask<String, Void, RSSFeed> {
             //DO A LOT MORE STUFF EVERYWHERE
 
 
-            outputPost.write(usrInput.getMessage().getBytes());
+            //outputPost.write(usrInput.getMessage().getBytes());
             outputPost.flush();
             outputPost.close();
         } catch (MalformedURLException e){
@@ -41,5 +44,7 @@ public class SendTask extends AsyncTask<String, Void, RSSFeed> {
         } catch (IOException e){
             e.printStackTrace();
         }
+
+        return result;
     }
 }

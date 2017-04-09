@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
+import android.os.AsyncTask;
 import android.os.Environment;
 import android.os.SystemClock;
 import android.support.annotation.NonNull;
@@ -27,15 +28,19 @@ import android.widget.ImageButton;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.BufferedOutputStream;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.SocketTimeoutException;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 
 import javax.net.ssl.HttpsURLConnection;
@@ -158,11 +163,13 @@ public class MainActivity extends AppCompatActivity {
                 ChatMessage usrInput = new ChatMessage();
                 usrInput.setMe(false);
                 usrInput.setMessage(msg);
+                usrInput.setLocation("San Antonio"); //Placeholder val for now...
+                //TODO: Implement GPS functionality and replace this placeholder w/coordinates
                 txt.setText("");
                 adapter.add(usrInput);
                 adapter.notifyDataSetChanged();
                 scroll();
-
+                new SendTask().execute(usrInput);
 
                 ChatMessage automaticResponse = new ChatMessage(true, "The sending of queries is not yet supported!");
                 adapter.add(automaticResponse);
@@ -235,31 +242,7 @@ public class MainActivity extends AppCompatActivity {
             recorder = null;
         }
     }
-    /*
-    private void onPlay(boolean start) {
-        if (start) {
-            startPlaying();
-        } else {
-            stopPlaying();
-        }
-    }
 
-    private void startPlaying() {
-        player = new MediaPlayer();
-        try {
-            player.setDataSource(getFilename());
-            player.prepare();
-            player.start();
-        } catch (IOException e) {
-            Log.e("Error", "prepare() failed");
-        }
-    }
-
-    private void stopPlaying() {
-        player.release();
-        player = null;
-    }
-    */
     @Override
     public void onStop(){
         super.onStop();
@@ -271,5 +254,61 @@ public class MainActivity extends AppCompatActivity {
             player.release();
             player = null;
         }
+    }
+
+    private class SendTask extends AsyncTask<ChatMessage, Void, String> {
+        private Exception exception;
+
+        protected String doInBackground(ChatMessage... params){
+            String result = null;
+            sendMessage(params[0]);
+            return result;
+        }
+
+        public void sendMessage(ChatMessage input){
+            URL url = null;
+            HttpURLConnection conn = null;
+            try{
+                url = new URL("http://localhost:5000/q");
+                conn = (HttpURLConnection) url.openConnection();
+                conn.setRequestMethod("POST");
+                conn.setRequestProperty("q", input.getMessage());
+                conn.setRequestProperty("l", input.getLocation());
+                Long timestamp = System.currentTimeMillis()/1000;
+                conn.setRequestProperty("t", timestamp.toString());
+                conn.setDoOutput(true);
+                OutputStream outputPost = new BufferedOutputStream(conn.getOutputStream());
+                BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(outputPost, "UTF-8"));
+                //Build POST request string. Format: q=<query>&l=<location>&t=<timestamp>
+                StringBuilder builder = new StringBuilder();
+                builder.append(URLEncoder.encode("q", "UTF-8"));
+                builder.append("=");
+                builder.append(URLEncoder.encode(input.getMessage(), "UTF-8"));
+                builder.append("&");
+                builder.append(URLEncoder.encode("l", "UTF-8"));
+                builder.append("=");
+                builder.append(URLEncoder.encode(input.getLocation(), "UTF-8"));
+                builder.append("&");
+                builder.append(URLEncoder.encode("t", "UTF-8"));
+                builder.append("=");
+                builder.append(URLEncoder.encode(timestamp.toString(), "UTF-8"));
+                writer.write(builder.toString());
+                writer.flush();
+                writer.close();
+                outputPost.close();
+                conn.connect();
+            } catch (MalformedURLException e){
+                e.printStackTrace();
+            } catch (SocketTimeoutException e){
+                e.printStackTrace();
+            } catch (IOException e){
+                e.printStackTrace();
+            }
+        }
+
+        protected void onPostExecute(){
+            Toast.makeText(getApplicationContext(), "Message sent!", Toast.LENGTH_SHORT).show();
+        }
+
     }
 }

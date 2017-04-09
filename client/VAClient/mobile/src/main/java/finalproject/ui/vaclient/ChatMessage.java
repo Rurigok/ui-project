@@ -9,6 +9,7 @@ public class ChatMessage {
     private String message;
     private Long userId;
     private String dateTime;
+    private String location;
 
     public ChatMessage(){
     }
@@ -55,5 +56,13 @@ public class ChatMessage {
 
     public void setDate(String dateTime) {
         this.dateTime = dateTime;
+    }
+
+    public String getLocation(){
+        return location;
+    }
+
+    public void setLocation(String location){
+        this.location = location;
     }
 }

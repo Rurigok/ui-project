@@ -312,6 +312,7 @@ public class MainActivity extends AppCompatActivity {
 
             try {
                 if (conn.getResponseCode() == HttpsURLConnection.HTTP_OK) {
+                    response = "";
                     String line;
                     BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
                     while ((line = br.readLine()) != null) {

@@ -33,9 +33,11 @@ import android.widget.Toast;
 import org.json.JSONObject;
 
 import java.io.BufferedOutputStream;
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
@@ -300,7 +302,6 @@ public class MainActivity extends AppCompatActivity {
                 writer.close();
                 outputPost.close();
                 conn.connect();
-                response = conn.getResponseMessage();
             } catch (MalformedURLException e){
                 e.printStackTrace();
             } catch (SocketTimeoutException e){
@@ -308,12 +309,24 @@ public class MainActivity extends AppCompatActivity {
             } catch (IOException e){
                 e.printStackTrace();
             }
+
+            try {
+                if (conn.getResponseCode() == HttpsURLConnection.HTTP_OK) {
+                    String line;
+                    BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                    while ((line = br.readLine()) != null) {
+                        response += line;
+                    }
+                }
+            } catch (Exception e) {
+            }
+
             return response;
         }
 
         //If this works, this will be where handling of the response is yo
         @Override
-        protected void onPostExecute(String result){
+        protected void onPostExecute(String result) {
             Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show();
         }
 

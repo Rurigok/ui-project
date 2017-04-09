@@ -30,6 +30,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONObject;
+
 import java.io.BufferedOutputStream;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -260,14 +262,14 @@ public class MainActivity extends AppCompatActivity {
         private Exception exception;
 
         protected String doInBackground(ChatMessage... params){
-            String result = null;
-            sendMessage(params[0]);
-            return result;
+            String response = sendMessage(params[0]);
+            return response;
         }
 
-        public void sendMessage(ChatMessage input){
+        public String sendMessage(ChatMessage input){
             URL url = null;
             HttpURLConnection conn = null;
+            String response = "Erorr! No response!";
             try{
                 url = new URL("http://localhost:5000/q");
                 conn = (HttpURLConnection) url.openConnection();
@@ -276,6 +278,7 @@ public class MainActivity extends AppCompatActivity {
                 conn.setRequestProperty("l", input.getLocation());
                 Long timestamp = System.currentTimeMillis()/1000;
                 conn.setRequestProperty("t", timestamp.toString());
+                conn.setDoOutput(true);
                 conn.setDoOutput(true);
                 OutputStream outputPost = new BufferedOutputStream(conn.getOutputStream());
                 BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(outputPost, "UTF-8"));
@@ -297,6 +300,7 @@ public class MainActivity extends AppCompatActivity {
                 writer.close();
                 outputPost.close();
                 conn.connect();
+                response = conn.getResponseMessage();
             } catch (MalformedURLException e){
                 e.printStackTrace();
             } catch (SocketTimeoutException e){
@@ -304,10 +308,13 @@ public class MainActivity extends AppCompatActivity {
             } catch (IOException e){
                 e.printStackTrace();
             }
+            return response;
         }
 
-        protected void onPostExecute(){
-            Toast.makeText(getApplicationContext(), "Message sent!", Toast.LENGTH_SHORT).show();
+        //If this works, this will be where handling of the response is yo
+        @Override
+        protected void onPostExecute(String result){
+            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show();
         }
 
     }

@@ -1,8 +1,7 @@
 import nltk
+import json
 
 def parse_query(raw_text, location, timestamp):
-
-
     # tags = nltk.pos_tag(nltk.word_tokenize(raw_text))
     # nouns = []
     # verbs = []
@@ -15,17 +14,19 @@ def parse_query(raw_text, location, timestamp):
     #     if part_of_speech.startswith("V"):
     #         verbs.append(word)
 
+    response = {} # build response dict (to be returned as JSON)
+
     print("input query:", raw_text)
     print("parsed input:", raw_text.split())
-    for word in raw_text.split():
-        if match(word, "weather", "raining", "snowing", "sunny"):
-            return "Weather keyword found"
-        elif match(word, "hello", "hi", "hey", "yo"):
-            return "Greeting found"
-        else:
-            return "No keyword matched."
 
-    #return "nouns: {}\nverbs: {}".format(nouns, verbs)
+    tokenized = raw_text.split()
+
+    response["text"] = "Server received request: [q={}] [l={}] [t={}]".format(raw_text, location, timestamp)
+    response["command"] = None
+
+    # Convert response dict into JSON string and return
+    response_str = json.dumps(response)
+    return response_str
 
 def parse_voice(form):
     pass

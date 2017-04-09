@@ -269,7 +269,7 @@ public class MainActivity extends AppCompatActivity {
         public String sendMessage(ChatMessage input){
             URL url = null;
             HttpURLConnection conn = null;
-            String response = "Erorr! No response!";
+            String response = "Error! No response!";
             try{
                 url = new URL("http://10.0.2.2:5000/q");
                 conn = (HttpURLConnection) url.openConnection();

@@ -1,7 +1,6 @@
 import json
-import commands
-
-command_table = {}
+from commands import command_table
+from nltk.metrics.distance import edit_distance
 
 def parse_query(raw_text, location, timestamp):
     # tags = nltk.pos_tag(nltk.word_tokenize(raw_text))
@@ -21,23 +20,23 @@ def parse_query(raw_text, location, timestamp):
     print("input query:", raw_text)
     print("parsed input:", raw_text.split())
 
-    tokenized = raw_text.split()
-
-    # Register command modules
-    commands = commands.command_table
-    # End command module registration
-
+    min_dist = 9999
     handled = False
-    for token in tokenized:
-        for keyword, command_func in command_table:
-            if token.lower() == keyword:
-                response_text = command_func(raw_text)
-                handled = True
+
+    for key in command_table.keys():
+        dist = edit_distance(raw_text.lower(), key)
+        #print("Comparing: ", raw_text, key, "=", dist)
+        if dist < min_dist:
+            min_dist = dist
+            command_func = command_table[key]
+            handled = True
 
     if not handled:
-        response_text = default_handler(response, raw_text)
+        response_text = "Sorry, I didn't quite understand that!"
+    else:
+        response_text = command_func()
 
-    response["text"] = "Server received request: [q={}] [l={}] [t={}]".format(raw_text, location, timestamp)
+    response["text"] = response_text
     response["command"] = None
 
     # Convert response dict into JSON string and return

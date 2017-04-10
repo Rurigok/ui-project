@@ -1,4 +1,7 @@
 import json
+import commands
+
+command_table = {}
 
 def parse_query(raw_text, location, timestamp):
     # tags = nltk.pos_tag(nltk.word_tokenize(raw_text))
@@ -20,6 +23,20 @@ def parse_query(raw_text, location, timestamp):
 
     tokenized = raw_text.split()
 
+    # Register command modules
+    commands = commands.command_table
+    # End command module registration
+
+    handled = False
+    for token in tokenized:
+        for keyword, command_func in command_table:
+            if token.lower() == keyword:
+                response_text = command_func(raw_text)
+                handled = True
+
+    if not handled:
+        response_text = default_handler(response, raw_text)
+
     response["text"] = "Server received request: [q={}] [l={}] [t={}]".format(raw_text, location, timestamp)
     response["command"] = None
 
@@ -29,18 +46,3 @@ def parse_query(raw_text, location, timestamp):
 
 def parse_voice(form):
     pass
-
-def match(word, *keywords):
-    """Returns true if word is sufficiently close to any keyword.
-
-    Args:
-        word: word to test
-        *keywords: a variable number of pre-defined keywords
-
-    Returns:
-        true if word sufficiently matches any keyword, false otherwise
-    """
-    for k in keywords:
-        if word == k:
-            return True
-    return False

@@ -19,9 +19,11 @@ import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewTreeObserver;
+import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -160,33 +162,50 @@ public class MainActivity extends AppCompatActivity {
         adapter.notifyDataSetChanged();
         scroll();
 
+
+        txt.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                boolean handled = false;
+                if (actionId == EditorInfo.IME_ACTION_SEND) {
+
+                    submitMessage(txt.getText().toString(), adapter);
+                    handled = true;
+                }
+                return handled;
+            }
+        });
+
         send =(ImageButton)findViewById(R.id.send);
+
         send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String msg = txt.getText().toString();
-                if(TextUtils.isEmpty(msg)){
-                    return;
-                }
-                String temp = msg;
-                temp += ("\n\n" + new SimpleDateFormat("hh:mm a").format(new Date()));
-                ChatMessage usrInput = new ChatMessage();
-                ChatMessage tempMsg = new ChatMessage();
-                usrInput.setMe(false);
-                tempMsg.setMessage(temp);
-                usrInput.setLocation("San Antonio"); //Placeholder val for now...
-                //TODO: Implement GPS functionality and replace this placeholder w/coordinates
-                txt.setText("");
-                adapter.add(tempMsg);
-                adapter.notifyDataSetChanged();
-                scroll();
-                usrInput.setMessage(msg);
-                new SendTask(adapter).execute(usrInput);
+                submitMessage(msg, adapter);
 
-                /*ChatMessage automaticResponse = new ChatMessage(true, "The sending of queries is not yet supported!");
-                adapter.add(automaticResponse);*/
-                adapter.notifyDataSetChanged();
-                scroll();
+//                if(TextUtils.isEmpty(msg)){
+//                    return;
+//                }
+//                String temp = msg;
+//                temp += ("\n\n" + new SimpleDateFormat("hh:mm a").format(new Date()));
+//                ChatMessage usrInput = new ChatMessage();
+//                ChatMessage tempMsg = new ChatMessage();
+//                usrInput.setMe(false);
+//                tempMsg.setMessage(temp);
+//                usrInput.setLocation("San Antonio"); //Placeholder val for now...
+//                //TODO: Implement GPS functionality and replace this placeholder w/coordinates
+//                txt.setText("");
+//                adapter.add(tempMsg);
+//                adapter.notifyDataSetChanged();
+//                scroll();
+//                usrInput.setMessage(msg);
+//                new SendTask(adapter).execute(usrInput);
+//
+////                ChatMessage automaticResponse = new ChatMessage(true, "The sending of queries is not yet supported!");
+////                adapter.add(automaticResponse);
+//                adapter.notifyDataSetChanged();
+//                scroll();
 //                Toast.makeText(getApplicationContext(), "The sending of queries is not yet supported!", Toast.LENGTH_SHORT).show();
 
 
@@ -194,10 +213,30 @@ public class MainActivity extends AppCompatActivity {
 //                adapter.add(automaticResponse2);
 //                adapter.notifyDataSetChanged();
 //                scroll();
+
             }
         });
     }
-
+    public void submitMessage(String msg, ChatAdapter adapter ){
+        msg = txt.getText().toString();
+        if(TextUtils.isEmpty(msg)){
+            return;
+        }
+        String temp = msg;
+//        temp += ("\n\n" + new SimpleDateFormat("hh:mm a").format(new Date()));
+        ChatMessage usrInput = new ChatMessage();
+        ChatMessage tempMsg = new ChatMessage();
+        usrInput.setMe(false);
+        tempMsg.setMessage(msg);
+        usrInput.setLocation("San Antonio"); //Placeholder val for now...
+        //TODO: Implement GPS functionality and replace this placeholder w/coordinates
+        txt.setText("");
+        adapter.add(tempMsg);
+        adapter.notifyDataSetChanged();
+        scroll();
+        usrInput.setMessage(msg);
+        new SendTask(adapter).execute(usrInput);
+    }
     public void showSoftKeyboard(View view) {
         InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
         view.requestFocus();

@@ -177,8 +177,8 @@ public class MainActivity extends AppCompatActivity {
                 scroll();
                 new SendTask(adapter).execute(usrInput);
 
-                ChatMessage automaticResponse = new ChatMessage(true, "The sending of queries is not yet supported!");
-                adapter.add(automaticResponse);
+                /*ChatMessage automaticResponse = new ChatMessage(true, "The sending of queries is not yet supported!");
+                adapter.add(automaticResponse);*/
                 adapter.notifyDataSetChanged();
                 scroll();
 //                Toast.makeText(getApplicationContext(), "The sending of queries is not yet supported!", Toast.LENGTH_SHORT).show();

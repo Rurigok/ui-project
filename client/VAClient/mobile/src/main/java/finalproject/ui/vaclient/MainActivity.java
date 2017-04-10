@@ -168,16 +168,19 @@ public class MainActivity extends AppCompatActivity {
                 if(TextUtils.isEmpty(msg)){
                     return;
                 }
-                //msg += ("\n\n" + "Sent: " + new SimpleDateFormat("MMM dd, yyyy hh:mm a").format(new Date()));
+                String temp = msg;
+                temp += ("\n\n" + "Sent: " + new SimpleDateFormat("MMM dd, yyyy hh:mm a").format(new Date()));
                 ChatMessage usrInput = new ChatMessage();
+                ChatMessage tempMsg = new ChatMessage();
                 usrInput.setMe(false);
-                usrInput.setMessage(msg);
+                tempMsg.setMessage(temp);
                 usrInput.setLocation("San Antonio"); //Placeholder val for now...
                 //TODO: Implement GPS functionality and replace this placeholder w/coordinates
                 txt.setText("");
-                adapter.add(usrInput);
+                adapter.add(tempMsg);
                 adapter.notifyDataSetChanged();
                 scroll();
+                usrInput.setMessage(msg);
                 new SendTask(adapter).execute(usrInput);
 
                 /*ChatMessage automaticResponse = new ChatMessage(true, "The sending of queries is not yet supported!");
@@ -364,8 +367,8 @@ public class MainActivity extends AppCompatActivity {
 
             if (text == null)
                 return;
-            else
-                text += "\n\n" + "Sent: " + new SimpleDateFormat("MMM dd, yyyy hh:mm a").format(new Date());
+
+            text += "\n\n" + "Sent: " + new SimpleDateFormat("MMM dd, yyyy hh:mm a").format(new Date());
             ListView messagesContainer = (ListView)findViewById(R.id.chatView);
             messagesContainer.setAdapter(chatAdapter);
             messagesContainer.setDivider(null);

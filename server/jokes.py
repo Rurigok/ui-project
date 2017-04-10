@@ -13,5 +13,4 @@ def crackJoke():
                     "I have a horse named Mayo. Sometimes Mayo neighs!",
                     "A man walks into a bar and asks the bartender if they have any helicopter flavored chips. The bartender responds \"Sorry sir, we only have plane\"",
                     "I used to want to be an archaeologist, but I didn't want my life to be in ruins"]
-    choice = random.randint(1, noJokes)-1
-    return jokes[choice]
+    return random.choice(jokes)

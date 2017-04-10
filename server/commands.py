@@ -1,9 +1,10 @@
 import weather
+import jokes
 import conversation
 
 command_table = {
-    "how's the weather": weather.execute_weather_command,
-    "what's the weather like": weather.execute_weather_command,
+    "how's the weather": weather.forecast,
+    "what's the weather like": weather.forecast,
 
     "hello": conversation.greeting,
     "hi": conversation.greeting,
@@ -15,4 +16,7 @@ command_table = {
     "bye": conversation.farewell,
     "cya": conversation.farewell,
     "later": conversation.farewell,
+
+    "tell me a joke": jokes.crackJoke,
+    "joke": jokes.crackJoke,
 }

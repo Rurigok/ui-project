@@ -363,7 +363,6 @@ public class MainActivity extends AppCompatActivity {
                 return;
 
             ListView messagesContainer = (ListView)findViewById(R.id.chatView);
-            //final ChatAdapter adapter = new ChatAdapter(MainActivity.this, new ArrayList<ChatMessage>());
             messagesContainer.setAdapter(chatAdapter);
             messagesContainer.setDivider(null);
             messagesContainer.setDividerHeight(0);

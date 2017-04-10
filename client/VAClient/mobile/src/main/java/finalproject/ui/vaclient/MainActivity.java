@@ -54,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
     ImageButton send;
     EditText txt;
     ListView messagesContainer;
+
     boolean notPlaying = false;
     private static final String AUDIO_RECORDER_FILE_EXT_3GP = ".3gp";
     private static final String AUDIO_RECORDER_FILE_EXT_MP4 = ".mp4";
@@ -179,6 +180,13 @@ public class MainActivity extends AppCompatActivity {
                 adapter.add(automaticResponse);
                 adapter.notifyDataSetChanged();
                 scroll();
+//                Toast.makeText(getApplicationContext(), "The sending of queries is not yet supported!", Toast.LENGTH_SHORT).show();
+
+
+//                ChatMessage automaticResponse2 = new ChatMessage(true, "hi");
+//                adapter.add(automaticResponse2);
+//                adapter.notifyDataSetChanged();
+//                scroll();
             }
         });
     }
@@ -310,6 +318,8 @@ public class MainActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
 
+
+            //responce here!
             try {
                 if (conn.getResponseCode() == HttpsURLConnection.HTTP_OK) {
                     response = "";
@@ -318,6 +328,7 @@ public class MainActivity extends AppCompatActivity {
                     while ((line = br.readLine()) != null) {
                         response += line;
                     }
+
                 }
             } catch (Exception e) {
             }
@@ -329,7 +340,19 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String result) {
             Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show();
+            ListView messagesContainer = (ListView)findViewById(R.id.chatView);
+            final ChatAdapter adapter = new ChatAdapter(MainActivity.this, new ArrayList<ChatMessage>());
+            messagesContainer.setAdapter(adapter);
+            messagesContainer.setDivider(null);
+            messagesContainer.setDividerHeight(0);
+            ChatMessage starter = new ChatMessage(true, result);
+            adapter.add(starter);
+            adapter.notifyDataSetChanged();
+            scroll();
+//            Log.e("Warning", result);
+
         }
+
 
     }
 }

@@ -30,6 +30,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedOutputStream;
@@ -339,13 +340,27 @@ public class MainActivity extends AppCompatActivity {
         //If this works, this will be where handling of the response is yo
         @Override
         protected void onPostExecute(String result) {
-            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show();
+
+            String text = null;
+            String command = null;
+
+            try {
+                JSONObject jsonResponse = new JSONObject(result);
+                text = jsonResponse.getString("text");
+                command = jsonResponse.getString("command");
+            } catch (JSONException e) {
+
+            }
+
+            if (text == null)
+                return;
+
             ListView messagesContainer = (ListView)findViewById(R.id.chatView);
             final ChatAdapter adapter = new ChatAdapter(MainActivity.this, new ArrayList<ChatMessage>());
             messagesContainer.setAdapter(adapter);
             messagesContainer.setDivider(null);
             messagesContainer.setDividerHeight(0);
-            ChatMessage starter = new ChatMessage(true, result);
+            ChatMessage starter = new ChatMessage(true, text);
             adapter.add(starter);
             adapter.notifyDataSetChanged();
             scroll();

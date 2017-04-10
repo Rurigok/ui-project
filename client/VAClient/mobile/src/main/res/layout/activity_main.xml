@@ -45,7 +45,9 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignRight="@+id/textView"
-        android:hint="Query goes here..." />
+        android:hint="Query goes here..."
+        android:inputType="text"
+        android:imeOptions="actionSend"/>
 
     <ListView
         android:id="@+id/chatView"

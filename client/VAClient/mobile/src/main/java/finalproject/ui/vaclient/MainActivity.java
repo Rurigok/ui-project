@@ -175,7 +175,7 @@ public class MainActivity extends AppCompatActivity {
                 adapter.add(usrInput);
                 adapter.notifyDataSetChanged();
                 scroll();
-                new SendTask().execute(usrInput);
+                new SendTask(adapter).execute(usrInput);
 
                 ChatMessage automaticResponse = new ChatMessage(true, "The sending of queries is not yet supported!");
                 adapter.add(automaticResponse);
@@ -271,6 +271,13 @@ public class MainActivity extends AppCompatActivity {
 
     private class SendTask extends AsyncTask<ChatMessage, Void, String> {
         private Exception exception;
+        private ChatAdapter chatAdapter;
+
+        public SendTask(ChatAdapter chatAdapter)
+        {
+            super();
+            this.chatAdapter = chatAdapter;
+        }
 
         protected String doInBackground(ChatMessage... params){
             String response = sendMessage(params[0]);
@@ -356,13 +363,12 @@ public class MainActivity extends AppCompatActivity {
                 return;
 
             ListView messagesContainer = (ListView)findViewById(R.id.chatView);
-            final ChatAdapter adapter = new ChatAdapter(MainActivity.this, new ArrayList<ChatMessage>());
-            messagesContainer.setAdapter(adapter);
+            messagesContainer.setAdapter(chatAdapter);
             messagesContainer.setDivider(null);
             messagesContainer.setDividerHeight(0);
             ChatMessage starter = new ChatMessage(true, text);
-            adapter.add(starter);
-            adapter.notifyDataSetChanged();
+            chatAdapter.add(starter);
+            chatAdapter.notifyDataSetChanged();
             scroll();
 //            Log.e("Warning", result);
 

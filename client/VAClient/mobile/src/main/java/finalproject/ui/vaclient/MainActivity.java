@@ -46,7 +46,9 @@ import java.net.MalformedURLException;
 import java.net.SocketTimeoutException;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import javax.net.ssl.HttpsURLConnection;
 
@@ -149,11 +151,11 @@ public class MainActivity extends AppCompatActivity {
         messagesContainer.setAdapter(adapter);
         messagesContainer.setDivider(null);
         messagesContainer.setDividerHeight(0);
-        ChatMessage starter = new ChatMessage(true, "Welcome to Voice Assistant!");
+        ChatMessage starter = new ChatMessage(true, "Welcome to Voice Assistant!" + "\n\n" + "Sent: " + new SimpleDateFormat("MMM dd, yyyy hh:mm a").format(new Date()));
         adapter.add(starter);
         adapter.notifyDataSetChanged();
         scroll();
-        ChatMessage starter2 = new ChatMessage(true, "Type a query to get started:");
+        ChatMessage starter2 = new ChatMessage(true, "Type a query to get started:"+ "\n\n" + "Sent: " + new SimpleDateFormat("MMM dd, yyyy hh:mm a").format(new Date()));
         adapter.add(starter2);
         adapter.notifyDataSetChanged();
         scroll();
@@ -166,6 +168,7 @@ public class MainActivity extends AppCompatActivity {
                 if(TextUtils.isEmpty(msg)){
                     return;
                 }
+                //msg += ("\n\n" + "Sent: " + new SimpleDateFormat("MMM dd, yyyy hh:mm a").format(new Date()));
                 ChatMessage usrInput = new ChatMessage();
                 usrInput.setMe(false);
                 usrInput.setMessage(msg);
@@ -361,7 +364,8 @@ public class MainActivity extends AppCompatActivity {
 
             if (text == null)
                 return;
-
+            else
+                text += "\n\n" + "Sent: " + new SimpleDateFormat("MMM dd, yyyy hh:mm a").format(new Date());
             ListView messagesContainer = (ListView)findViewById(R.id.chatView);
             messagesContainer.setAdapter(chatAdapter);
             messagesContainer.setDivider(null);

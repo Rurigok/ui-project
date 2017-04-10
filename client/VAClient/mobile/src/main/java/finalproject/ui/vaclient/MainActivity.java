@@ -151,11 +151,11 @@ public class MainActivity extends AppCompatActivity {
         messagesContainer.setAdapter(adapter);
         messagesContainer.setDivider(null);
         messagesContainer.setDividerHeight(0);
-        ChatMessage starter = new ChatMessage(true, "Welcome to Voice Assistant!" + "\n\n" + "Sent: " + new SimpleDateFormat("MMM dd, yyyy hh:mm a").format(new Date()));
+        ChatMessage starter = new ChatMessage(true, "Welcome to Voice Assistant!" + "\n\n" + new SimpleDateFormat("hh:mm a").format(new Date()));
         adapter.add(starter);
         adapter.notifyDataSetChanged();
         scroll();
-        ChatMessage starter2 = new ChatMessage(true, "Type a query to get started:"+ "\n\n" + "Sent: " + new SimpleDateFormat("MMM dd, yyyy hh:mm a").format(new Date()));
+        ChatMessage starter2 = new ChatMessage(true, "Type a query to get started:"+ "\n\n" + new SimpleDateFormat("hh:mm a").format(new Date()));
         adapter.add(starter2);
         adapter.notifyDataSetChanged();
         scroll();
@@ -169,7 +169,7 @@ public class MainActivity extends AppCompatActivity {
                     return;
                 }
                 String temp = msg;
-                temp += ("\n\n" + "Sent: " + new SimpleDateFormat("MMM dd, yyyy hh:mm a").format(new Date()));
+                temp += ("\n\n" + new SimpleDateFormat("hh:mm a").format(new Date()));
                 ChatMessage usrInput = new ChatMessage();
                 ChatMessage tempMsg = new ChatMessage();
                 usrInput.setMe(false);
@@ -368,7 +368,7 @@ public class MainActivity extends AppCompatActivity {
             if (text == null)
                 return;
 
-            text += "\n\n" + "Sent: " + new SimpleDateFormat("MMM dd, yyyy hh:mm a").format(new Date());
+            text += "\n\n" + new SimpleDateFormat("hh:mm a").format(new Date());
             ListView messagesContainer = (ListView)findViewById(R.id.chatView);
             messagesContainer.setAdapter(chatAdapter);
             messagesContainer.setDivider(null);

@@ -227,15 +227,16 @@ public class MainActivity extends AppCompatActivity {
     }
     public void submitMessage(String msg, ChatAdapter adapter ){
         msg = txt.getText().toString();
-        if(TextUtils.isEmpty(msg)){
+        String temp = txt.getText().toString();
+        if(TextUtils.isEmpty(msg) || TextUtils.isEmpty(temp)){
             return;
         }
-        String temp = msg;
-//        temp += ("\n\n" + new SimpleDateFormat("hh:mm a").format(new Date()));
         ChatMessage usrInput = new ChatMessage();
         ChatMessage tempMsg = new ChatMessage();
+        usrInput.setDate(new SimpleDateFormat("hh:mm a").format(new Date()));
+        temp += ("\n\n" + usrInput.getDate());
         usrInput.setMe(false);
-        tempMsg.setMessage(msg);
+        tempMsg.setMessage(temp);
         usrInput.setLocation("San Antonio"); //Placeholder val for now...
         //TODO: Implement GPS functionality and replace this placeholder w/coordinates
         txt.setText("");

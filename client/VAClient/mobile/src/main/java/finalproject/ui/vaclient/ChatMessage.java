@@ -1,9 +1,13 @@
 package finalproject.ui.vaclient;
 
+import java.util.Date;
+
 /**
  * Created by Cliff
  */
 public class ChatMessage {
+
+    private Date time;
     private long id;
     private boolean isMe;
     private String message;
@@ -25,6 +29,10 @@ public class ChatMessage {
     public void setId(long id) {
         this.id = id;
     }
+
+    public Date getTime() { return time; }
+
+    public void setTime(Date time) { this.time = time; }
 
     public boolean getIsme() {
         return isMe;

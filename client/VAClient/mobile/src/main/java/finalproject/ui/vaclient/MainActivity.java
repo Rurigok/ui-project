@@ -112,7 +112,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         //Hide mic button and instruction view for demo purposes
-        microphone = (ImageButton)findViewById(R.id.micButton);
+        /*microphone = (ImageButton)findViewById(R.id.micButton);
         microphone.setVisibility(View.VISIBLE);
         TextView instruct = (TextView)findViewById(R.id.textView);
         instruct.setVisibility(View.INVISIBLE);
@@ -131,10 +131,10 @@ public class MainActivity extends AppCompatActivity {
                         Log.i(TAG, "End recording");
                         stopRecord();
                         break;
-                }*/
+                }
                 return true;
             }
-        });
+        });*/
 
         txt = (EditText)findViewById(R.id.query);
         txt.setOnTouchListener(new View.OnTouchListener() {
@@ -142,11 +142,19 @@ public class MainActivity extends AppCompatActivity {
             {
                 send = (ImageButton)findViewById(R.id.send);
                 send.setVisibility(View.VISIBLE);
-                microphone.setVisibility(View.INVISIBLE);
+                //microphone.setVisibility(View.INVISIBLE);
                 showSoftKeyboard(v);
                 return true;
             }
         });
+        txt.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                Log.d("TEST RESPONSE", "Action ID = " + actionId + "KeyEvent = " + event);
+                return true;
+            }
+        });
+
 
         messagesContainer = (ListView)findViewById(R.id.chatView);
         final ChatAdapter adapter = new ChatAdapter(MainActivity.this, new ArrayList<ChatMessage>());

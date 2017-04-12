@@ -21,6 +21,9 @@ command_table = {
     "yo": conversation.greeting,
     "hey there": conversation.greeting,
     "hi there": conversation.greeting,
+    "greetings": conversation.greeting,
+    "how do you do": conversation.greeting,
+    "how are you": conversation.greeting,
 
     "bye": conversation.farewell,
     "cya": conversation.farewell,

@@ -161,7 +161,7 @@ public class MainActivity extends AppCompatActivity {
         messagesContainer.setAdapter(adapter);
         messagesContainer.setDivider(null);
         messagesContainer.setDividerHeight(0);
-        ChatMessage starter = new ChatMessage(true, "Welcome to Voice Assistant!" + "\n\n" + new SimpleDateFormat("hh:mm a").format(new Date()));
+        ChatMessage starter = new ChatMessage(true, "Hey there! I'm Mercury, your personal assistant! Call me Merk for short." + "\n\n" + new SimpleDateFormat("hh:mm a").format(new Date()));
         adapter.add(starter);
         adapter.notifyDataSetChanged();
         scroll();
@@ -343,7 +343,7 @@ public class MainActivity extends AppCompatActivity {
             HttpURLConnection conn = null;
             String response = "Error! No response!";
             try{
-                url = new URL("http://10.0.2.2:5000/q");
+                url = new URL("http://162.209.100.212:5000/q");
                 conn = (HttpURLConnection) url.openConnection();
                 conn.setRequestMethod("POST");
                 conn.setRequestProperty("q", input.getMessage());

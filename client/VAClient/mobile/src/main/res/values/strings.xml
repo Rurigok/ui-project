@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">VAClient</string>
+    <string name="app_name">Merk</string>
     <string name="Instruction">Press and Hold Mic to record your query</string>
     
     <string name="hello_world">Hello world!</string>

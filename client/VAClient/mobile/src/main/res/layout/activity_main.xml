@@ -23,6 +23,7 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignRight="@+id/query"
+        android:visibility="invisible"
         android:text="@string/Instruction"
         android:textSize="14sp" />
 

@@ -3,13 +3,16 @@ package finalproject.ui.vaclient;
 import android.*;
 import android.Manifest;
 import android.app.Activity;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.os.AsyncTask;
 import android.os.Environment;
 import android.os.SystemClock;
+import android.speech.RecognizerIntent;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -43,6 +46,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import java.lang.reflect.Array;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.SocketTimeoutException;
@@ -51,6 +55,7 @@ import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Locale;
 
 import javax.net.ssl.HttpsURLConnection;
 
@@ -225,6 +230,49 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+    /////////////////////////////////voice stuff//////////////////////////
+    public void onMicClick(View v){
+        promptSpeechInput();
+    }
+    public void promptSpeechInput(){
+        Intent i = new Intent (RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+        i.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+        i.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault());
+        i.putExtra(RecognizerIntent.EXTRA_PROMPT, "Say a command");
+
+        try{
+            startActivityForResult(i,100);
+
+        }catch (ActivityNotFoundException a){
+            Toast.makeText(MainActivity.this, "Sorry! Your device doesn't support speech language", Toast.LENGTH_LONG).show();
+        }
+
+
+    }
+
+    public void onActivityResult(int request_code, int result_code, Intent i){
+        super.onActivityResult(request_code,result_code,i);
+
+        switch(request_code){
+            case 100: if(result_code == RESULT_OK && i != null){
+                ArrayList<String> result = i.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+                //resulttext.setText(result.get(0));
+                Log.e("Recording", result.get(0));
+//                submitMessage(adapter, result.get(0));
+            }
+            break;
+        }
+
+
+
+
+    }
+
+
+
+    /////////////////////////////////////////end voice stuff/////////////
+
+
     public void submitMessage(String msg, ChatAdapter adapter ){
         msg = txt.getText().toString();
         String temp = txt.getText().toString();
@@ -322,6 +370,8 @@ public class MainActivity extends AppCompatActivity {
             player = null;
         }
     }
+
+    /////////////////////////////send task class/////////////////////////
 
     private class SendTask extends AsyncTask<ChatMessage, Void, String> {
         private Exception exception;

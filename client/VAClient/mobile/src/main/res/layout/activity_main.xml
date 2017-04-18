@@ -32,12 +32,13 @@
         android:id="@+id/micButton"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:background="@drawable/roundbutton"
-        android:src="@drawable/ic_keyboard_voice_black_36dp"
-        android:visibility="visible"
         android:layout_alignParentBottom="true"
         android:layout_toLeftOf="@+id/query"
-        android:layout_toStartOf="@+id/query" />
+        android:layout_toStartOf="@+id/query"
+        android:background="@drawable/roundbutton"
+        android:onClick="onMicClick"
+        android:src="@drawable/ic_keyboard_voice_black_36dp"
+        android:visibility="visible" />
 
     <EditText
         android:id="@+id/query"

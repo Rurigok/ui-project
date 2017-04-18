@@ -229,6 +229,7 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+        /////
     }
     /////////////////////////////////voice stuff//////////////////////////
     public void onMicClick(View v){
@@ -257,8 +258,8 @@ public class MainActivity extends AppCompatActivity {
             case 100: if(result_code == RESULT_OK && i != null){
                 ArrayList<String> result = i.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
                 //resulttext.setText(result.get(0));
-                Log.e("Recording", result.get(0));
-//                submitMessage(adapter, result.get(0));
+//                Log.e("Recording", result.get(0));
+                submitMessage(result.get(0),adapter);
             }
             break;
         }

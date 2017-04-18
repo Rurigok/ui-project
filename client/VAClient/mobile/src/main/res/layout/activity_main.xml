@@ -32,23 +32,22 @@
         android:id="@+id/micButton"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
         android:background="@drawable/roundbutton"
         android:src="@drawable/ic_keyboard_voice_black_36dp"
-        android:visibility="invisible" />
+        android:visibility="visible"
+        android:layout_alignParentBottom="true"
+        android:layout_toLeftOf="@+id/query"
+        android:layout_toStartOf="@+id/query" />
 
     <EditText
         android:id="@+id/query"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
         android:hint="Query goes here..."
         android:inputType="text"
-        android:imeOptions="actionSend"/>
+        android:imeOptions="actionSend"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
 
     <ListView
         android:id="@+id/chatView"
@@ -72,8 +71,8 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_toEndOf="@+id/textView"
-        android:layout_toRightOf="@+id/textView"
         android:visibility="visible"
-        app:srcCompat="@android:drawable/ic_menu_send" />
+        app:srcCompat="@android:drawable/ic_menu_send"
+        android:layout_toRightOf="@+id/textView" />
 
 </RelativeLayout>

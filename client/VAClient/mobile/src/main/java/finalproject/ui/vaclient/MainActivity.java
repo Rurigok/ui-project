@@ -63,7 +63,7 @@ import java.util.Random;
 import javax.net.ssl.HttpsURLConnection;
 
 public class MainActivity extends AppCompatActivity {
-    ImageButton microphone;
+    ImageButton micButton;
     ImageButton send;
     EditText txt;
     ListView messagesContainer;
@@ -178,7 +178,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         messagesContainer = (ListView)findViewById(R.id.chatView);
-        final ChatAdapter adapter = new ChatAdapter(MainActivity.this, new ArrayList<ChatMessage>());
+        adapter = new ChatAdapter(MainActivity.this, new ArrayList<ChatMessage>());
         messagesContainer.setAdapter(adapter);
         messagesContainer.setDivider(null);
         messagesContainer.setDividerHeight(0);
@@ -274,7 +274,10 @@ public class MainActivity extends AppCompatActivity {
             case 100: if(result_code == RESULT_OK && i != null){
                 ArrayList<String> result = i.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
                 //resulttext.setText(result.get(0));
-//                Log.e("Recording", result.get(0));
+                for(String s : result){
+                    Log.e("RESULT", s);
+                }
+                Log.e("In", result.get(0));
                 submitMessage(result.get(0),adapter);
             }
             break;
@@ -291,8 +294,12 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void submitMessage(String msg, ChatAdapter adapter ){
-        msg = txt.getText().toString();
-        String temp = txt.getText().toString();
+        Log.e("Recording",msg);
+        if(msg.isEmpty()) {
+            msg = txt.getText().toString();
+
+        }
+        String temp = msg;
         if(TextUtils.isEmpty(msg) || TextUtils.isEmpty(temp)){
             return;
         }

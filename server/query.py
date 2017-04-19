@@ -1,5 +1,5 @@
 import json
-from commands import command_table
+from commands import KEYWORDS, PHRASES
 from nltk.metrics.distance import edit_distance
 
 def parse_query(raw_text, location, timestamp):
@@ -23,12 +23,12 @@ def parse_query(raw_text, location, timestamp):
     min_dist = 9999
     handled = False
 
-    for key in command_table.keys():
-        dist = edit_distance(raw_text.lower(), key)
+    for phrase in PHRASES:
+        dist = edit_distance(raw_text.lower(), phrase)
         #print("Comparing: ", raw_text, key, "=", dist)
         if dist < min_dist:
             min_dist = dist
-            command_func = command_table[key]
+            command_func = PHRASES[phrase]
             handled = True
 
     if not handled:

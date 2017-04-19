@@ -2,7 +2,15 @@ import weather
 import jokes
 import conversation
 
-command_table = {
+KEYWORDS = {
+    ("weather", "rain", "snow", "jacket", "sunny", "hot", "cold"): weather.forecast,
+    ("hi", "hello", "hey", "greetings", "yo", "sup"): conversation.greeting,
+    ("bye", "farwell", "cya", "later", "goodbye"): conversation.farewell,
+    ("help"): conversation.help,
+    ("joke"): jokes.crackJoke,
+}
+
+PHRASES = {
     "how's the weather": weather.forecast,
     "what's the weather like": weather.forecast,
     "weather": weather.forecast,

@@ -18,6 +18,7 @@ def text_query_post():
     query_text = request.form["q"]
     location = request.form["l"]
     timestamp = request.form["t"]
+    session_token = request.form["session_token"]
     return query.parse_query(query_text, location, timestamp)
 
 @app.route("/vq", methods=["POST"])

@@ -46,6 +46,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Array;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
@@ -55,7 +56,9 @@ import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Random;
 
 import javax.net.ssl.HttpsURLConnection;
 
@@ -80,6 +83,8 @@ public class MainActivity extends AppCompatActivity {
     private int output_formats[] = { MediaRecorder.OutputFormat.MPEG_4,             MediaRecorder.OutputFormat.THREE_GPP };
     private String file_exts[] = { AUDIO_RECORDER_FILE_EXT_MP4, AUDIO_RECORDER_FILE_EXT_3GP };
 
+    private static final String SESSION_TOKEN = generateSessionToken();
+
     // Requesting permission to RECORD_AUDIO
     private boolean permissionToRecordAccepted = false;
     private String [] permissions = {android.Manifest.permission.RECORD_AUDIO, Manifest.permission.WRITE_EXTERNAL_STORAGE};
@@ -98,6 +103,17 @@ public class MainActivity extends AppCompatActivity {
             finish();
         }
 
+    }
+
+    protected static String generateSessionToken() {
+        String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+        StringBuilder token = new StringBuilder();
+        Random rnd = new Random();
+        while (token.length() < 24) { // length of the random string.
+            int index = (int) (rnd.nextFloat() * alphabet.length());
+            token.append(alphabet.charAt(index));
+        }
+        return token.toString();
     }
 
     @Override
@@ -404,20 +420,17 @@ public class MainActivity extends AppCompatActivity {
                 conn.setDoOutput(true);
                 OutputStream outputPost = new BufferedOutputStream(conn.getOutputStream());
                 BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(outputPost, "UTF-8"));
-                //Build POST request string. Format: q=<query>&l=<location>&t=<timestamp>
-                StringBuilder builder = new StringBuilder();
-                builder.append(URLEncoder.encode("q", "UTF-8"));
-                builder.append("=");
-                builder.append(URLEncoder.encode(input.getMessage(), "UTF-8"));
-                builder.append("&");
-                builder.append(URLEncoder.encode("l", "UTF-8"));
-                builder.append("=");
-                builder.append(URLEncoder.encode(input.getLocation(), "UTF-8"));
-                builder.append("&");
-                builder.append(URLEncoder.encode("t", "UTF-8"));
-                builder.append("=");
-                builder.append(URLEncoder.encode(timestamp.toString(), "UTF-8"));
-                writer.write(builder.toString());
+
+                //Build POST request string. Format: q=<query> l=<location> t=<timestamp>
+                HashMap<String, String> form = new HashMap<>();
+
+                form.put("q", input.getMessage());
+                form.put("l", input.getLocation());
+                form.put("t", timestamp.toString());
+                form.put("session_token", SESSION_TOKEN);
+
+                writer.write(urlEncode(form));
+
                 writer.flush();
                 writer.close();
                 outputPost.close();
@@ -430,8 +443,7 @@ public class MainActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
 
-
-            //responce here!
+            // check http response
             try {
                 if (conn.getResponseCode() == HttpsURLConnection.HTTP_OK) {
                     response = "";
@@ -476,6 +488,26 @@ public class MainActivity extends AppCompatActivity {
             chatAdapter.notifyDataSetChanged();
             scroll();
 //            Log.e("Warning", result);
+
+        }
+
+        public String urlEncode(HashMap<String, String> form) {
+            StringBuilder encoded = new StringBuilder();
+
+            // URL encode the form key-value pairs. A trailing ampersand will be added which
+            // shouldn't be a problem.
+            try {
+                for (String key : form.keySet()) {
+                    encoded.append(URLEncoder.encode(key, "UTF-8"));
+                    encoded.append("=");
+                    encoded.append(URLEncoder.encode(form.get(key), "UTF-8"));
+                    encoded.append("&");
+                }
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+
+            return encoded.toString();
 
         }
 

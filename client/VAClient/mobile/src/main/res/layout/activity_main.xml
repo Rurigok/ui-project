@@ -20,12 +20,10 @@
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_alignParentBottom="false"
-        android:layout_alignParentLeft="false"
-        android:layout_alignParentStart="false"
         android:layout_below="@+id/chatView"
         android:background="@drawable/clear"
         android:onClick="onMicClick"
-        android:scaleX=".8"
+        android:scaleX="1.0"
         android:src="@drawable/ic_keyboard_voice_black_36dp"
         android:visibility="visible" />
 

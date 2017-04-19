@@ -44,7 +44,7 @@ def analyze(session_history):
     # retrieve last message from session history
     if len(session_history) == 0:
         return "I don't have any messages to analyze!"
-    last_message = session_history.pop()
+    last_message = session_history[-1]
 
     response_str = "Your last query was \"{}\".\n".format(last_message.user_message)
 

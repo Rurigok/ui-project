@@ -11,7 +11,7 @@ def home():
 
 @app.route("/q/<q>")
 def text_query(q):
-    return query.parse_query(q, None, None)
+    return query.parse_query(q, None, None, None)
 
 @app.route("/q", methods=["POST"])
 def text_query_post():
@@ -19,7 +19,7 @@ def text_query_post():
     location = request.form["l"]
     timestamp = request.form["t"]
     session_token = request.form["session_token"]
-    return query.parse_query(query_text, location, timestamp)
+    return query.parse_query(query_text, location, timestamp, session_token)
 
 @app.route("/vq", methods=["POST"])
 def voice_query_post():

@@ -1,24 +1,24 @@
 import json
+import conversation
 from commands import KEYWORDS, PHRASES
+from message import Message
 from nltk.metrics.distance import edit_distance
 
-def parse_query(raw_text, location, timestamp):
-    # tags = nltk.pos_tag(nltk.word_tokenize(raw_text))
-    # nouns = []
-    # verbs = []
-    #
-    # for pair in tags:
-    #     word = pair[0]
-    #     part_of_speech = pair[1]
-    #     if part_of_speech.startswith("N"):
-    #         nouns.append(word)
-    #     if part_of_speech.startswith("V"):
-    #         verbs.append(word)
+sessions = {}
+
+def parse_query(raw_text, location, timestamp, session_token):
+
+    # Handle session
+    if session_token not in sessions:
+        sessions[session_token] = list()
+
+    session_history = sessions[session_token]
 
     response = {} # build response dict (to be returned as JSON)
+    message = Message(raw_text) # meta message object for logging
 
     print("input query:", raw_text)
-    print("parsed input:", raw_text.split())
+    print("session token:", session_token)
 
     min_dist = 9999
     handled = False
@@ -30,14 +30,23 @@ def parse_query(raw_text, location, timestamp):
             min_dist = dist
             command_func = PHRASES[phrase]
             handled = True
+            message.set_similarity(dist, phrase)
 
     if not handled:
         response_text = "Sorry, I didn't quite understand that!"
     else:
-        response_text = command_func()
+        if command_func == conversation.analyze:
+            response_text = command_func(session_history)
+        else:
+            response_text = command_func()
 
     response["text"] = response_text
     response["command"] = None
+
+    # Store this message into session history
+    message.server_response = response_text
+    message.triggered_func = str(command_func)
+    session_history.append(message)
 
     # Convert response dict into JSON string and return
     response_str = json.dumps(response)

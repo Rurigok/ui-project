@@ -1,6 +1,7 @@
 import weather
 import jokes
 import conversation
+import query
 
 KEYWORDS = {
     ("weather", "rain", "snow", "jacket", "sunny", "hot", "cold"): weather.forecast,
@@ -37,13 +38,22 @@ PHRASES = {
     "cya": conversation.farewell,
     "later": conversation.farewell,
     "goodbye": conversation.farewell,
+    "that'll be all": conversation.farewell,
+    "that's all": conversation.farewell,
 
     "help": conversation.help,
     "what can you do": conversation.help,
     "help me": conversation.help,
     "what can i do": conversation.help,
 
+    "thanks": conversation.thanks,
+    "thank you": conversation.thanks,
+
     "tell me a joke": jokes.crackJoke,
     "joke": jokes.crackJoke,
     "show me a joke": jokes.crackJoke,
+
+    "analysis": conversation.analyze,
+    "why did you say that": conversation.analyze,
+    "analyze last command": conversation.analyze
 }

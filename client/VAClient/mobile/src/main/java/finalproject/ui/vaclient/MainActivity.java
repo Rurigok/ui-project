@@ -186,7 +186,7 @@ public class MainActivity extends AppCompatActivity {
         adapter.add(starter);
         adapter.notifyDataSetChanged();
         scroll();
-        ChatMessage starter2 = new ChatMessage(true, "Type a query to get started \n (type \"help\" to know what I can do)"+ "\n\n" + new SimpleDateFormat("hh:mm a").format(new Date()));
+        ChatMessage starter2 = new ChatMessage(true, "Type a command or press the mic to get started \n (type \"help\" to know what I can do)"+ "\n\n" + new SimpleDateFormat("hh:mm a").format(new Date()));
         adapter.add(starter2);
         adapter.notifyDataSetChanged();
         scroll();

@@ -149,23 +149,23 @@ public class MainActivity extends AppCompatActivity {
         //TextView instruct = (TextView)findViewById(R.id.textView);
 
         //Set onTouch listener for mic button
-        microphone=(ImageButton)findViewById(R.id.micButton);
-        microphone.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event){
-                    switch(event.getAction()) {
-                    case MotionEvent.ACTION_DOWN:
-                        Log.i(TAG, "Begin recording");
-                        startRecord();
-                        break;
-                    case MotionEvent.ACTION_UP:
-                        Log.i(TAG, "End recording");
-                        stopRecord();
-                        break;
-                }
-                return true;
-            }
-        });
+//        microphone=(ImageButton)findViewById(R.id.micButton);
+//        microphone.setOnTouchListener(new View.OnTouchListener() {
+//            @Override
+//            public boolean onTouch(View v, MotionEvent event){
+//                    switch(event.getAction()) {
+//                    case MotionEvent.ACTION_DOWN:
+//                        Log.i(TAG, "Begin recording");
+//                        startRecord();
+//                        break;
+//                    case MotionEvent.ACTION_UP:
+//                        Log.i(TAG, "End recording");
+//                        stopRecord();
+//                        break;
+//                }
+//                return true;
+//            }
+//        });
 
         txt = (EditText)findViewById(R.id.query);
         txt.setOnTouchListener(new View.OnTouchListener() {

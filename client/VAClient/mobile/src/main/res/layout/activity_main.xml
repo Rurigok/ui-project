@@ -14,29 +14,18 @@
     android:visibility="visible"
     tools:context="finalproject.ui.vaclient.MainActivity">
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/query"
-        android:layout_alignEnd="@+id/query"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignRight="@+id/query"
-        android:visibility="invisible"
-        android:text="@string/Instruction"
-        android:textSize="14sp" />
-
 
     <ImageButton
         android:id="@+id/micButton"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_alignParentBottom="true"
-        android:layout_toLeftOf="@+id/query"
-        android:layout_toStartOf="@+id/query"
-        android:background="@drawable/roundbutton"
+        android:layout_alignParentBottom="false"
+        android:layout_alignParentLeft="false"
+        android:layout_alignParentStart="false"
+        android:layout_below="@+id/chatView"
+        android:background="@drawable/clear"
         android:onClick="onMicClick"
+        android:scaleX=".8"
         android:src="@drawable/ic_keyboard_voice_black_36dp"
         android:visibility="visible" />
 
@@ -44,11 +33,11 @@
         android:id="@+id/query"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
-        android:hint="Query goes here..."
-        android:inputType="text"
-        android:imeOptions="actionSend"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:hint="Say something!"
+        android:imeOptions="actionSend"
+        android:inputType="text" />
 
     <ListView
         android:id="@+id/chatView"
@@ -69,11 +58,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_toEndOf="@+id/textView"
+        android:layout_toEndOf="@+id/query"
+        android:layout_toRightOf="@+id/query"
+        android:background="@drawable/clear"
+        android:scaleX="1.75"
+        android:scaleY="1.5"
         android:visibility="visible"
-        app:srcCompat="@android:drawable/ic_menu_send"
-        android:layout_toRightOf="@+id/textView" />
+        app:srcCompat="@android:drawable/ic_menu_send" />
 
 </RelativeLayout>

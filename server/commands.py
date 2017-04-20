@@ -68,9 +68,9 @@ PHRASES = {
     "what's a good place to eat": food.findRestaurant,
     "what's a good restaurant around me": food.findRestaurant,
     "food": food.findRestaurant,
-    "hungry": food.findRestaurant
-    "restaurant": food.findRestaurant
-    "eat": food.findRestaurant
+    "hungry": food.findRestaurant,
+    "restaurant": food.findRestaurant,
+    "eat": food.findRestaurant,
     "i'm hungry": food.findRestaurant,
     "where can i eat": food.findRestaurant
 }

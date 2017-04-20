@@ -8,6 +8,8 @@ sessions = {}
 
 def parse_query(raw_text, location, timestamp, session_token):
 
+    print("-------------------------------------")
+
     # Handle session
     if session_token not in sessions:
         sessions[session_token] = list()
@@ -51,6 +53,8 @@ def parse_query(raw_text, location, timestamp, session_token):
     print("session history for {}:".format(session_token))
     for m in session_history:
         print(m)
+
+    print("-------------------------------------")
 
     # Convert response dict into JSON string and return
     response_str = json.dumps(response)

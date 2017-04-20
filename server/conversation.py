@@ -25,6 +25,7 @@ def help():
     help_strs = [
         "I can give you the weather forecast for today.",
         "I can tell you a joke.",
+        "I can suggest restaurants around you.",
     ]
 
     return "\n".join(help_strs)

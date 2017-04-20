@@ -48,6 +48,10 @@ def parse_query(raw_text, location, timestamp, session_token):
     message.triggered_func = str(command_func)
     session_history.append(message)
 
+    print("session history for {}:".format(session_token))
+    for m in session_history:
+        print(m)
+
     # Convert response dict into JSON string and return
     response_str = json.dumps(response)
     return response_str

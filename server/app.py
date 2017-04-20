@@ -1,6 +1,7 @@
 from flask import Flask
 from flask import request
 
+import sys
 import query
 
 app = Flask(__name__)
@@ -26,4 +27,9 @@ def voice_query_post():
     return query.parse_voice(request.form)
 
 if __name__ == '__main__':
+
+    if sys.version_info < (3, 2):
+        print("Must use python 3.2 or greater.")
+        exit()
+
     app.run()

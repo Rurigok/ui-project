@@ -73,6 +73,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String AUDIO_RECORDER_FILE_EXT_MP4 = ".mp4";
     private static final String AUDIO_RECORDER_FOLDER = "AudioRecorder";
     private static final int REQUEST_RECORD_AUDIO_PERMISSION = 200;
+    public static final int RequestPermissionCode = 1;
     public static final boolean debug = true;
     private String TAG = "Recording";
     private ChatAdapter adapter;
@@ -87,6 +88,7 @@ public class MainActivity extends AppCompatActivity {
 
     // Requesting permission to RECORD_AUDIO
     private boolean permissionToRecordAccepted = false;
+    private boolean permissionStorage = false;
     private String [] permissions = {android.Manifest.permission.RECORD_AUDIO, Manifest.permission.WRITE_EXTERNAL_STORAGE};
 
 
@@ -94,15 +96,24 @@ public class MainActivity extends AppCompatActivity {
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         switch (requestCode){
-            case REQUEST_RECORD_AUDIO_PERMISSION:
-                permissionToRecordAccepted  = grantResults[0] == PackageManager.PERMISSION_GRANTED;
-                break;
+            case RequestPermissionCode:
+                if (grantResults.length> 0) {
+                    permissionToRecordAccepted = (grantResults[0] == PackageManager.PERMISSION_GRANTED);
+                    permissionStorage = (grantResults[1] == PackageManager.PERMISSION_GRANTED);
+
+                    if(permissionToRecordAccepted && permissionStorage)
+                    {
+                        Log.i("I", "PERMISSION GRANTED");
+                    }
+                    else
+                        Log.i("I", "PERMISSION DENIED");
+
+                }
         }
         if (!permissionToRecordAccepted ) {
             System.out.print("no permission mic");
             finish();
         }
-
     }
 
     protected static String generateSessionToken() {
@@ -132,30 +143,29 @@ public class MainActivity extends AppCompatActivity {
                         REQUEST_RECORD_AUDIO_PERMISSION);
             }
         }
-        //Hide mic button and instruction view for demo purposes
-        /*microphone = (ImageButton)findViewById(R.id.micButton);
-        microphone.setVisibility(View.VISIBLE);
-        TextView instruct = (TextView)findViewById(R.id.textView);
-        instruct.setVisibility(View.INVISIBLE);
+
+        microphone = (ImageButton)findViewById(R.id.micButton);
+        //microphone.setVisibility(View.VISIBLE);
+        //TextView instruct = (TextView)findViewById(R.id.textView);
 
         //Set onTouch listener for mic button
-        microphone=(ImageButton)findViewById(R.id.micButton);
-        microphone.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event){
-                    /*switch(event.getAction()) {
-                    case MotionEvent.ACTION_DOWN:
-                        Log.i(TAG, "Begin recording");
-                        startRecord();
-                        break;
-                    case MotionEvent.ACTION_UP:
-                        Log.i(TAG, "End recording");
-                        stopRecord();
-                        break;
-                }
-                return true;
-            }
-        });*/
+//        microphone=(ImageButton)findViewById(R.id.micButton);
+//        microphone.setOnTouchListener(new View.OnTouchListener() {
+//            @Override
+//            public boolean onTouch(View v, MotionEvent event){
+//                    switch(event.getAction()) {
+//                    case MotionEvent.ACTION_DOWN:
+//                        Log.i(TAG, "Begin recording");
+//                        startRecord();
+//                        break;
+//                    case MotionEvent.ACTION_UP:
+//                        Log.i(TAG, "End recording");
+//                        stopRecord();
+//                        break;
+//                }
+//                return true;
+//            }
+//        });
 
         txt = (EditText)findViewById(R.id.query);
         txt.setOnTouchListener(new View.OnTouchListener() {
@@ -178,7 +188,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         messagesContainer = (ListView)findViewById(R.id.chatView);
-        final ChatAdapter adapter = new ChatAdapter(MainActivity.this, new ArrayList<ChatMessage>());
+        adapter = new ChatAdapter(MainActivity.this, new ArrayList<ChatMessage>());
         messagesContainer.setAdapter(adapter);
         messagesContainer.setDivider(null);
         messagesContainer.setDividerHeight(0);
@@ -186,7 +196,7 @@ public class MainActivity extends AppCompatActivity {
         adapter.add(starter);
         adapter.notifyDataSetChanged();
         scroll();
-        ChatMessage starter2 = new ChatMessage(true, "Type a query to get started \n (type \"help\" to know what I can do)"+ "\n\n" + new SimpleDateFormat("hh:mm a").format(new Date()));
+        ChatMessage starter2 = new ChatMessage(true, "Type a command or press the mic to get started \n (type \"help\" to know what I can do)"+ "\n\n" + new SimpleDateFormat("hh:mm a").format(new Date()));
         adapter.add(starter2);
         adapter.notifyDataSetChanged();
         scroll();
@@ -205,8 +215,10 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        send =(ImageButton)findViewById(R.id.send);
+        recorder = new MediaRecorder();
 
+
+        send =(ImageButton)findViewById(R.id.send);
         send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -274,7 +286,10 @@ public class MainActivity extends AppCompatActivity {
             case 100: if(result_code == RESULT_OK && i != null){
                 ArrayList<String> result = i.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
                 //resulttext.setText(result.get(0));
-//                Log.e("Recording", result.get(0));
+                for(String s : result){
+                    Log.e("RESULT", s);
+                }
+                Log.e("In", result.get(0));
                 submitMessage(result.get(0),adapter);
             }
             break;
@@ -291,8 +306,12 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void submitMessage(String msg, ChatAdapter adapter ){
-        msg = txt.getText().toString();
-        String temp = txt.getText().toString();
+        Log.e("Recording",msg);
+        if(msg.isEmpty()) {
+            msg = txt.getText().toString();
+
+        }
+        String temp = msg;
         if(TextUtils.isEmpty(msg) || TextUtils.isEmpty(temp)){
             return;
         }
@@ -334,9 +353,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void startRecord(){
-        recorder = new MediaRecorder();
         recorder.setAudioSource(MediaRecorder.AudioSource.MIC);
-        recorder.setOutputFormat(output_formats[currentFormat]);
+        //recorder.setOutputFormat(output_formats[currentFormat]);
+        recorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
+
         recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
         recorder.setOutputFile(getFilename());
         recorder.setOnErrorListener(errorListener);
@@ -369,9 +389,9 @@ public class MainActivity extends AppCompatActivity {
     private void stopRecord(){
         if(null != recorder){
             recorder.stop();
-            recorder.reset();
-            recorder.release();
-            recorder = null;
+            //recorder.reset();
+            //recorder.release();
+            //recorder = null;
         }
     }
 

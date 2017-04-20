@@ -430,7 +430,8 @@ public class MainActivity extends AppCompatActivity {
             HttpURLConnection conn = null;
             String response = "Error! No response!";
             try{
-                url = new URL("http://162.209.100.212:5000/q");
+                url = new URL("http://andrew.sanetra.me/merc/q");
+                //url = new URL("http://162.209.100.212:5000/q");
                 //url = new URL("http://10.0.2.2:5000/q");
                 conn = (HttpURLConnection) url.openConnection();
                 conn.setRequestMethod("POST");

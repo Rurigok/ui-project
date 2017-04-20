@@ -2,6 +2,7 @@ import weather
 import jokes
 import conversation
 import query
+import food
 
 KEYWORDS = {
     ("weather", "rain", "snow", "jacket", "sunny", "hot", "cold"): weather.forecast,
@@ -9,6 +10,7 @@ KEYWORDS = {
     ("bye", "farwell", "cya", "later", "goodbye"): conversation.farewell,
     ("help"): conversation.help,
     ("joke"): jokes.crackJoke,
+    ("restaurant", "food", "hungry"): food.findRestaurant
 }
 
 PHRASES = {
@@ -55,5 +57,11 @@ PHRASES = {
 
     "analysis": conversation.analyze,
     "why did you say that": conversation.analyze,
-    "analyze last command": conversation.analyze
+    "analyze last command": conversation.analyze,
+
+    "what should I eat today": food.findRestaurant,
+    "what's a good place to eat": food.findRestaurant,
+    "what's a good restaurant around me": food.findRestaurant,
+    "i'm hungry": food.findRestaurant,
+    "where can i eat": food.findRestaurant
 }

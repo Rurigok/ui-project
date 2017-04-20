@@ -11,4 +11,4 @@ def findRestaurant():
 	restaurantCuis = data['restaurants'][restNo]['restaurant']['cuisines']
 	restaurantAddr = data['restaurants'][restNo]['restaurant']['location']['address']
 	returnStr = "How about " + restaurantName + " a " + restaurantCuis + " restaurant located at " + restaurantAddr + "!"
-	print(returnStr)
+	return returnStr

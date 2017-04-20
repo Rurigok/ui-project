@@ -182,7 +182,7 @@ public class MainActivity extends AppCompatActivity {
         messagesContainer.setAdapter(adapter);
         messagesContainer.setDivider(null);
         messagesContainer.setDividerHeight(0);
-        ChatMessage starter = new ChatMessage(true, "Hey there! I'm Mercury, your personal assistant! Call me Merk for short." + "\n\n" + new SimpleDateFormat("hh:mm a").format(new Date()));
+        ChatMessage starter = new ChatMessage(true, "Hey there! I'm Mercury, your personal assistant! Call me Merc for short." + "\n\n" + new SimpleDateFormat("hh:mm a").format(new Date()));
         adapter.add(starter);
         adapter.notifyDataSetChanged();
         scroll();

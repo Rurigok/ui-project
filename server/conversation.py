@@ -40,6 +40,17 @@ def thanks():
 
     return random.choice(thankyou_strs)
 
+def name():
+
+    name_strs = [
+        "My name is Merc.",
+        "My name is Merc!",
+        "I'm Merc, your friendly neighborhood assistant!",
+        "I'm Merc!",
+    ]
+
+    return random.choice(name_strs)
+
 def analyze(session_history):
     # retrieve last message from session history
     if len(session_history) == 0:

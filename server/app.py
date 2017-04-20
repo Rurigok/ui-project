@@ -32,4 +32,4 @@ if __name__ == '__main__':
         print("Must use python 3.2 or greater.")
         exit()
 
-    app.run()
+    app.run(port=4567)

@@ -48,6 +48,11 @@ PHRASES = {
     "help me": conversation.help,
     "what can i do": conversation.help,
 
+    "what's your name": conversation.name,
+    "what do I call you": conversation.name,
+    "name": conversation.name,
+    "what is your name": conversation.name,
+
     "thanks": conversation.thanks,
     "thank you": conversation.thanks,
 

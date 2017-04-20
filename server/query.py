@@ -49,19 +49,10 @@ def parse_query(raw_text, location, timestamp, session_token):
     response["text"] = response_text
     response["command"] = None
 
-    print("session history for {}:".format(session_token))
-    for m in session_history:
-        print(m)
-
-    print("------ Session history after append ------")
-
     # Store this message into session history
     message.server_response = response_text
     message.triggered_func = str(command_func)
     session_history.append(message)
-
-    for m in session_history:
-        print(m)
 
     print("-------------------------------------")
 

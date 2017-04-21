@@ -60,6 +60,13 @@ PHRASES = {
     "joke": jokes.crackJoke,
     "show me a joke": jokes.crackJoke,
 
+    "meme": jokes.lenny,
+    "succ": jokes.lenny,
+    "dank": jokes.lenny,
+
+    "what's the first rule of Fight Club?": jokes.fightClub,
+    "up up down down left right left right A B": jokes.konami,
+
     "analysis": conversation.analyze,
     "why did you say that": conversation.analyze,
     "analyze last command": conversation.analyze,

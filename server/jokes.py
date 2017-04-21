@@ -27,4 +27,4 @@ def fightClub():
     return "Don't talk about Fight Club"
 
 def konami():
-    return "30 bonus lives unlocked \n Just kidding I like your life just the way it is 💙"
+    return "30 bonus lives unlocked \nJust kidding I like your life just the way it is 💙"

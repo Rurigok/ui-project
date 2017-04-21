@@ -66,6 +66,7 @@ PHRASES = {
 
     "what's the first rule of Fight Club?": jokes.fightClub,
     "up up down down left right left right A B": jokes.konami,
+    "⬆️⬆️⬇️⬇️⬅️➡️⬅️➡️🅰️🅱️": jokes.konami,
 
     "analysis": conversation.analyze,
     "why did you say that": conversation.analyze,
